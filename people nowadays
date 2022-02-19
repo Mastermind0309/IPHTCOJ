@@ -1,0 +1,47 @@
+#include <iostream>
+#include<set>
+using namespace std;
+int main()
+{
+    set<pair<int,string>> s;
+    string str;
+    int n,x;
+    cin>>n;
+    while(n--)
+    {
+        cin>>str;
+        if(str=="born")
+        {
+            cin>>str>>x;
+            s.insert({x,str});
+        }
+        else if(str=="find")
+        {
+            cin>>str>>x;
+            cout<<(s.count({x,str})? "YES":"NO")<<"\n";
+        }
+        else if(str=="kill")
+        {
+            cin>>str>>x;
+            s.erase({x,str});
+        }
+        else if(str=="young")
+        {
+            if(str.empty()) continue;
+            cout<<s.begin()->second<<" "<<s.begin()->first<<"\n";
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+}
+
+
