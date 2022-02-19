@@ -1,0 +1,37 @@
+#include <stdio.h>
+int n,r;
+int px[10005], py[10005], visited[10005];
+int ans1, ans2, t=0;
+void dfs(int now);
+int main()
+{
+    scanf("%d%d", &n,&r);
+    ans1=n;
+    ans2=0;
+    for(int i=0;i<n;i++)
+    {
+        scanf("%d%d", &px[i], &py[i]);
+    }
+    for(int i=0; i<n; i++)
+    {
+        dfs(i);
+        if(t>0)
+        {
+            ans1=ans1-t-1;
+            ans2++;
+            t=0;
+        }
+    }
+    printf("%d %d\n", ans1, ans2);
+}
+void dfs(int now)
+{
+    visited[now]=1;
+    for(int i=0; i<n; i++)
+    {
+        if((px[i]-px[now])*(px[i]-px[now])+(py[i]-py[now])*(py[i]-py[now])>r*r) continue;
+        if(visited[i]==1) continue;
+        t++;
+        dfs(i);
+    }
+}
