@@ -1,0 +1,40 @@
+#include <iostream>
+#include<cstring>
+#include<vector>
+using namespace std;
+int t,r,k,n;
+typedef struct {int x,y,u; }p;
+int dfs(p& now , vector<p>& v);
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cin>>t;
+    while(t--)
+    {
+        cin>>n>>r>>k;
+        vector<p> v(n);
+        for(auto& p:v) cin>>p.x>>p.y;
+        int res1=0, res2=0;
+        for(auto& p:v)
+        {
+            if(p.u)continue;
+            int tmp=dfs(p,v);
+            (tmp<k)? (res1++):(res2++);
+            
+        }
+        cout<<res1<<" "<<res2<<"\n";
+    }
+}
+int dfs(p& now, vector<p>& v)
+{
+    int res=1;
+    now.u=1;
+    for(auto& p:v)
+    {
+        if(p.u) continue;
+        if(((now.x-p.x)*(now.x-p.x)+(now.y-p.y)*(now.y-p.y))<=r*r)
+            res+=dfs(p,v);
+    }
+    return res;
+}
