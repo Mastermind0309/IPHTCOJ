@@ -1,0 +1,60 @@
+#define next ptr_to_next_node
+#define prev ptr_to_prev_node
+#define ch character
+void insert(Node **cur, char c)
+{
+    Node *newN = (Node*)malloc(sizeof(Node));
+    newN->ch = c;
+    newN->next = (*cur)->next;
+    (*cur)->next->prev = newN;
+    (*cur)->next = newN;
+    newN->prev = (*cur);
+    if( (*cur) == tail ) tail = newN;
+}
+
+void deletion(Node **cur)
+{
+    if( (*cur) != tail )
+    {
+        Node *del = (*cur)->next;
+        (*cur)->next = del->next;
+        del->next->prev = (*cur);
+        if(del == tail) tail = (*cur);
+        free(del);
+    }
+}
+
+void backspace(Node **cur)
+{
+    if( (*cur) != head )
+    {
+        Node *del = (*cur);
+        (*cur)->prev->next = del->next;
+        del->next->prev = (*cur)->prev;
+        (*cur) = del->prev;
+        if(del == tail) tail = (*cur);
+        free(del);
+    }
+}
+
+void go_left(Node **cur, int t)
+{
+    while( t-- )
+        (*cur) = (*cur)->prev;
+}
+
+void go_right(Node **cur, int t)
+{
+    while( t-- )
+        (*cur) = (*cur)->next;
+}
+
+void go_home(Node **cur)
+{
+    (*cur) = head;
+}
+
+void go_end(Node **cur)
+{
+    (*cur) = tail;
+}
