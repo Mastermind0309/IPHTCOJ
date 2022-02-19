@@ -1,0 +1,39 @@
+#include<stdio.h>
+long long int fpw (  long long int x,  long long int y, long long int m)
+{
+   
+    long long int res;
+    long long int tmp;
+    if(y==0)
+    {
+        tmp=1%m;
+        return tmp;
+    }
+    else
+    {
+    
+        res=fpw(x,y/2,m);
+        res=res*res%m;
+        
+    }
+    if(y%2==1)
+    {
+        res=res*(x%m)%m;
+        
+    }
+    return res;
+
+}
+ int  main()
+{
+     long long int ans;
+     long long int x;
+     long long int y;
+    long long int m;
+    scanf("%lld",&x);
+    scanf("%lld",&y);
+    scanf("%lld",&m);
+    ans=fpw(x,y,m);
+    printf("%lld\n",ans);
+}
+
