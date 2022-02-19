@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include<stdlib.h>
+int bs(int x);
+int n,q, x,ans, s[2000005];
+int main()
+{
+    while(~scanf("%d %d", &n, &q))
+    {
+        for(int i=0; i<n; i++) scanf("%d", &s[i]);
+        while(q--)
+        {
+            scanf("%d", &x);
+            ans=bs(x);
+            if(ans)
+                printf("%d\n", ans);
+            else
+                printf("Break your bridge!\n");
+        }
+        
+    }
+}
+int bs(int x)
+{
+    int l=0, r=n, ans=0;
+    while(l<r)
+    {
+        int mid=(l+r)/2;
+        if(s[mid]>x) r=mid;
+        else ans=mid, l=mid+1;
+    }
+    if(s[ans]==x) return ans+1;
+    else return 0;
+        
+}
