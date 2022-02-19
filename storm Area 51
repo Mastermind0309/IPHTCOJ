@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include<stdlib.h>
+typedef enum{Op, Num, Var } Type;
+typedef struct _node
+{
+    Type type ;
+    char ch;
+    int val;
+    struct _node *left, *right;
+}Node;
+Type gettype(char c)
+{
+    if(c=='+'||c=='-'||c=='*'||c=='/') return Op;
+    else if (c=='x'||c=='y'||c=='z') return Var;
+    else return Num;
+}
+Node *newnode(int val ,char ch, Type type )
+{
+    Node *res= (Node*)malloc(sizeof(Node));
+    res->val=val;
+    res->ch=ch;
+    res->type=type;
+    res->left=res->right=NULL;
+    return res;
+}
+Node *buildtree()
+{
+    char c=getchar();
+    Type type=gettype(c);
+    Node *root= newnode(0,c,type);
+    if(type==Op)
+    {
+        getchar();
+        root->left = buildtree();
+        root->right = buildtree();
+    }else if(type==Num)
+    {
+        ungetc(c,stdin);
+        scanf("%d", &(root->val));
+        getchar();
+    }
+    else if (type==Var) getchar();
+        return root;
+}// above is fine
+void inorder(Node *root)
+{
+    if(!root) return;
+    inorder(root->left);
+    root->type==Num? printf("%d",root->val) : printf("%c", root->ch);
+    inorder(root->right);
+}
+void freetree(Node *root)
+{
+    if(!root) return;
+    freetree(root->left);
+    freetree(root->right);
+    free(root);
+}
+int evaluate(Node *root, int x, int y, int z)
+{
+    if(root->type==Op)
+    {
+        int l= evaluate(root->left, x, y, z);
+        int r= evaluate(root->right, x ,y, z);
+        switch(root->ch)
+        {
+            case'+' : return l+r;
+            case'-' : return l-r;
+            case '*' : return l*r;
+            case'/' : return l/r;
+        }
+    }else if (root->type==Var)
+    {
+        switch(root->ch)
+        {
+            case'x' : return x;
+            case'y' : return y;
+            case'z' : return z;
+        }
+    }
+    return (root->val);
+}
+int main()
+{
+    int x,y,z;
+    Node *root= buildtree();
+    scanf("%d %d %d", &x,&y,&z);
+    inorder(root);
+    puts("");
+    printf("%d\n", evaluate(root,x,y,z));
+    freetree(root);
+    return 0;
+    
+}
