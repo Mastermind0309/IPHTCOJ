@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include<stdlib.h>
+int upper_bound(int *arr, int len, int tar)
+{
+    int l=0, r=len, mid;
+    while(l<r)
+    {
+        mid=(l+r)/2;
+        if(arr[mid]>tar) r=mid; //存剛好大於的
+        else l=mid+1;
+    }
+    return l;
+}
+int lower_bound(int *arr, int len, int tar)
+{
+    int l=0, r=len, mid;
+    while (l<r)
+    {
+        mid=(l+r)/2;
+        if(arr[mid]>=tar) r=mid; //存不小於的
+        else l=mid+1;
+    }
+    return l;
+}
+
+int cmp( const void *a, const void*b)
+{
+    return *(const int*)a-*(const int*)b;
+}
+int n, a[100005], q,x;
+int main()
+{
+    scanf("%d", &n);
+    for(int i=0; i<n; i++) scanf("%d",a+i);
+    qsort(a,n, sizeof(int), cmp);
+    scanf("%d", &q);
+    while(q--)
+    {
+        scanf("%d", &x);
+        printf("%d\n",upper_bound(a,n,x)-lower_bound(a,n,x));
+        
+    }
+}
