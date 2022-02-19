@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#define mod 1000000007
+typedef struct
+{
+    long long int a[2][2];
+}mat;
+long long F(long long n);
+mat fpw(long long n);
+mat matmul(mat a, mat b);
+int main()
+{
+    long long n;
+    while(~scanf("%lld", &n))
+    {
+        printf("%lld\n",F(n));
+    }
+}
+long long int F(long long n)
+{
+    if(n==1||n==2)
+        return 1;
+    mat m=fpw(n-2);
+    return (m.a[0][0]+m.a[0][1])%mod;
+}
+mat fpw(long long n)
+{
+    mat m,p;
+    m.a[0][0]=m.a[0][1]=m.a[1][0]=1, m.a[1][1]=0;
+    if(n==1) return m;
+    p=fpw(n/2);
+    p=matmul(p,p);
+    return (n%2==0 ? p : matmul(m,p));
+}
+
+mat matmul(mat a,mat b)
+{
+    mat m;
+    m.a[0][0]=m.a[0][1]=m.a[1][0]=m.a[1][1]=0;
+    for(int i=0; i<2; i++) for(int j=0; j<2; j++) for(int k=0; k<2 ;k++) m.a[i][j]=(m.a[i][j]+(a.a[i][k]*b.a[k][j])%mod)%mod;
+    return m;
+}
+
+
