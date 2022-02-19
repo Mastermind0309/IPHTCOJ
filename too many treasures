@@ -1,0 +1,49 @@
+#include<stdio.h>
+int list[1000005];
+long long int ans[1000005];
+long long int new[1000005];
+int upperbound[1000005];
+int lowerbound[1000005];
+int m[1000005];
+
+int main()
+{
+    int n,q;
+    list[0]=0;
+    ans[0]=0;
+    new[0]=0;
+    upperbound[0]=0;
+    lowerbound[0]=0;
+    scanf("%d %d",&n,&q);
+    for(int i=1; i<=n; i++)
+    {
+        scanf("%d",&list[i]);
+    }
+    for(int i=1; i<=q; i++)
+    {
+        scanf("%d %d",&lowerbound[i],&upperbound[i]);
+        scanf("%d",&m[i]);
+    }
+    for(int i=1; i<=n; i++)
+    {
+        if(list[i]>0)
+        {
+            new[i]=new[i-1]+list[i];
+        }
+
+        else
+        {
+            new[i]=new[i-1];
+        }
+    }
+    for(int i=1; i<=q; i++)
+    {
+        ans[i]=(new[lowerbound[i]+m[i]-1]-new[lowerbound[i]-1]);
+    }
+    for(int i=1; i<=q; i++)
+    {
+        printf("%lld\n",ans[i]);
+    }
+
+}
+
