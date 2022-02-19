@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+#define max(a,b) a>b? a:b
+ 
+char s[1005];
+char p[1005];
+int s_length, q ,p_length, ans, a,b,prefix[1005];
+int main()
+{
+    while(~scanf("%s %s", s,p))
+    {
+        s_length=strlen(s);
+        p_length= strlen(p);
+        for(int i=1; i<=s_length-p_length+1; i++)
+        {
+            prefix[i]=prefix[i-1]+(!strncmp(s+i-1, p, p_length));
+        }
+        ans=0;
+        scanf("%d",&q);
+        while (q--)
+        {
+            scanf("%d %d", &a,&b);
+            if(b-p_length+1 <= a-1) continue;
+            ans=max(ans,prefix[b-p_length+1]-prefix[a-1]);
+            
+        }
+        printf("%d\n",ans);
+        
+    }
+    return 0;
+}
