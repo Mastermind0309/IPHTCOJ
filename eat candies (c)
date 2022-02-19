@@ -1,0 +1,75 @@
+#include <stdio.h>
+long long int r,g,b;
+long long int A,B,C;
+long long int days;
+long int q,i;
+
+
+
+int main()
+{
+  
+    scanf("%ld",&q);
+    for(i=0;i<q;i++)
+    {
+        scanf("%lld %lld %lld",&r,&g,&b);
+        if(r>=g&&r>=b)
+        {
+            C=r;
+            if(g>=b)
+            {
+                B=g;
+                A=b;
+            }
+            else
+            {
+                B=b;
+                A=g;
+            }
+        }
+        else if(g>=r&&g>=b)
+        {
+            C=g;
+            if(r>=b)
+            {
+                B=r;
+                A=b;
+            }
+            else
+            {
+                B=b;
+                A=r;
+            }
+        }
+        else if(b>=r&&b>=g)
+        {
+            C=b;
+            if(r>=g)
+            {
+                B=r;
+                A=g;
+            }
+            else
+            {
+                B=g;
+                A=r;
+            }
+        }
+    
+    if(A==B&&B==C&&C==A)
+    {
+        days=A+((B+C)-A)/2;
+    }
+    
+    else if (A+B<=C)
+    {
+        days=A+B;
+    }
+    if(A+B>C)
+    {
+        days=A+(B+C-A)/2;
+    }
+    printf("%lld\n",days);
+    }
+}
+
