@@ -1,0 +1,30 @@
+#include <iostream>
+#include<cstring>
+#define mod 1000000007
+using namespace std;
+int t,x;
+int main()
+{
+    ios_base::sync_with_stdio();
+    cin.tie();
+    cin>>t;
+    string s;
+    while(t--)
+    {
+        cin>>x>>s;
+        long long n=s.size(), right=n-1, flag=1;
+        for(int i=0;i<x;i++)
+        {
+            int times=s[i]-'0'; //把它轉成int
+            if(flag && n>x) flag=0;
+            if(flag)
+            {
+                for(int j=0; j<times-1; j++)
+                    s+=s.substr(i+1, right);
+            }
+            n=(n+(right*(times-1))%mod)%mod;
+            right=(right*times-1)%mod;
+        }
+        cout<<n<<'\n';
+    }
+}
