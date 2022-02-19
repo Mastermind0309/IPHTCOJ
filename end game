@@ -1,0 +1,51 @@
+#include<cstring>
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+typedef struct {
+    int x,y,steps;
+}p;
+ int main()
+{
+     ios_base::sync_with_stdio(0);
+     cin.tie(0);
+     int n,m,res=-1, x, y, T=0;
+     cin>>n>>m;
+     vector<string> v(n);
+     vector<vector<bool>> used(n, vector<bool>(m,false)); //?
+     int dx[]={1,0,-1,0}, dy[]={0,1,0,-1};
+     for(auto& s:v)
+         cin>>s;
+     for(int i=0;i<n;i++)
+         for(int j=0;j<m;j++)
+         {
+             if(v[i][j]=='I') x=i , y=j;
+             else if(v[i][j]=='T') T++;
+         }
+     queue<p> q;
+     q.push({x,y,0});
+     used[x][y]=true;
+     while(!q.empty())
+     {
+         p now= q.front();
+         q.pop();
+         if(v[now.x][now.y]=='T') T--;
+         if(T==0) {
+             res= now.steps;
+             break;
+         }
+         for(int i=0; i<4 ;i ++)
+         {
+             int nx= now.x+dx[i];
+             int ny= now.y+dy[i];
+             if(nx<0||nx>=n||ny<0||ny>=m||used[nx][ny]||v[nx][ny]=='C') continue;
+             q.push({nx, ny, now.steps+1});
+             used[nx][ny]=true;
+         }
+     }
+     cout<<res<<'\n';
+
+     
+     
+ }
