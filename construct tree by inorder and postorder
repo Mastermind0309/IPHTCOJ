@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+typedef struct _node
+{
+     int val;
+    struct _node *right, *left;
+}Node;
+Node *newnode(int);
+Node *buildtree(int *inorder, int *postorder, int size );
+void pre(Node*);
+void freetree(Node*);
+
+int id, n, in[105], post[105];
+int main()
+{
+    while(~scanf("%d",&n))
+    {
+        for(int i=0; i<n; i++) scanf("%d",in+i);
+        for(int i=0; i<n; i++) scanf("%d",post+i);
+        Node *root= buildtree(in, post, n);
+        printf("testcase%d:",id++);
+        pre(root);
+        printf(" \n");
+        freetree(root);
+        
+    }
+}
+Node *newnode(int val)
+{
+    Node *ret= (Node*)malloc(sizeof(Node));
+    ret->val=val, ret->right=ret->left=NULL;
+    return ret;
+}
+
+Node *buildtree(int *inorder, int*postorder, int size)
+{
+    if(size<=0) return NULL;
+    Node *root= newnode(postorder[size-1]);
+    int idx=0;
+    while(inorder[idx]!=postorder[size-1]) idx++;
+    root->left = buildtree(inorder, postorder, idx);
+    root->right = buildtree(inorder+idx+1, postorder+idx, size-idx-1);
+    return root;
+}
+void pre(Node *root)
+{
+    if(!root) return;
+    printf(" %d",root->val);
+    pre(root->left);
+    pre(root->right);
+}
+void freetree(Node *root)
+{
+    if(!root) return;
+    freetree(root->left);
+    freetree(root->right);
+    freetree(root);
+}
